@@ -41,10 +41,6 @@ func NewClient(serverURL string, vc VC) *Client {
 	c.ServerURL = serverURL
 	c.VC = vc
 
-	c.WorkDir = ""
-	c.Project = ""
-	c.CompareURL = ""
-
 	return c
 }
 
