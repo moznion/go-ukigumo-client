@@ -113,12 +113,12 @@ func (c *Client) submitResult(status string, logFilename string) {
 }
 
 type responseJSON struct {
-	report report `json:"report"`
+	Report report `json:"report"`
 }
 
 type report struct {
-	url        string `json:"url"`
-	lastStatus string `json:"last_status"`
+	URL        string `json:"url"`
+	LastStatus string `json:"last_status"`
 }
 
 func (c *Client) sendResultToServer(status string, logFilename string) (string, string) {
@@ -144,6 +144,7 @@ func (c *Client) sendResultToServer(status string, logFilename string) (string, 
 		"compare_url":      {c.CompareURL},
 		"elapsed_time_sec": {strconv.FormatInt(c.ElapsedTimeSec, 10)},
 	})
+
 	if err != nil {
 		log.Fatal(err)
 		return "", ""
@@ -154,12 +155,14 @@ func (c *Client) sendResultToServer(status string, logFilename string) (string, 
 		log.Fatalf("Failed to send result to server (status: %d)", resStatusCode)
 	}
 
-	var dat responseJSON
+	defer res.Body.Close()
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(res.Body)
+
+	var dat responseJSON
 	json.Unmarshal(buf.Bytes(), &dat)
 
-	reportURL := dat.report.url
+	reportURL := dat.Report.URL
 	log.Printf("report url: %s", reportURL)
-	return reportURL, dat.report.lastStatus
+	return reportURL, dat.Report.LastStatus
 }

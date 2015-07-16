@@ -22,7 +22,7 @@ func NewRunner(conf *Config, elapsedTimeSec *int64) *Runner {
 }
 
 func (r *Runner) Run(phase string) error {
-	var commands []string = nil
+	var commands []string
 	if phase == "Install" {
 		commands = r.decideInstallCommand()
 	} else if phase == "Script" {
