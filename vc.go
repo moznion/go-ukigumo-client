@@ -1,4 +1,4 @@
-package main
+package ukigumo
 
 type VCInfo struct {
 	Repository       string

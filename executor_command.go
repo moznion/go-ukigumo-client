@@ -1,4 +1,4 @@
-package main
+package ukigumo
 
 type CommandExecutor struct {
 	commands []string
